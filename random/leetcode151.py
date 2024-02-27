@@ -39,6 +39,6 @@ class Solution:
 
             
 print(Solution().reverseWords("hello     that is me"))
-          
+print(len("hello that is me"))           
                 
             
