@@ -13,11 +13,7 @@ interface
             // x for cols , y for rows!
         end;
 
-    function initGrid() : matrix;
-    procedure printGrid(grid : matrix);
-    procedure putCandy(var grid : matrix ; candyPosition : couple);
     procedure run(numberCandies : integer);
-    procedure setRandomCandy(var grid: matrix ; var candyPosition : couple);
 
 implementation
 
