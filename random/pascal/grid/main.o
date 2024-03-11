@@ -1,0 +1,89 @@
+program CountIslands;
+
+const
+  MaxRows = 10; // Maximum number of rows in the grid
+  MaxCols = 10; // Maximum number of columns in the grid
+
+var
+  grid: array[1..MaxRows, 1..MaxCols] of Integer;
+  visited: array[1..MaxRows, 1..MaxCols] of Boolean;
+  rows, cols: Integer;
+
+// Function to check if a cell is within the grid boundaries
+function isValidCell(row, col: Integer): Boolean;
+begin
+  isValidCell := (row >= 1) and (row <= rows) and (col >= 1) and (col <= cols);
+end;
+
+// Depth-first search to explore the island
+procedure DFS(row, col: Integer);
+const
+  directions: array[1..4, 1..2] of Integer = ((-1, 0), (1, 0), (0, -1), (0, 1));
+var
+  i, newRow, newCol: Integer;
+begin
+  visited[row, col] := True;
+
+  for i := 1 to 4 do
+  begin
+    newRow := row + directions[i, 1];
+    newCol := col + directions[i, 2];
+
+    if isValidCell(newRow, newCol) and (grid[newRow, newCol] = 1) and (not visited[newRow, newCol]) then
+      DFS(newRow, newCol);
+  end;
+end;
+
+// Function to count the number of islands
+function CountIslands: Integer;
+var
+  count, i, j: Integer;
+begin
+  count := 0;
+
+  for i := 1 to rows do
+    for j := 1 to cols do
+      if (grid[i, j] = 1) and (not visited[i, j]) then
+      begin
+        Inc(count);
+        DFS(i, j); // Explore the island
+      end;
+
+  CountIslands := count;
+end;
+
+// Main program
+var
+  i, j: Integer;
+begin
+  // Input: Assuming the grid is predefined
+  rows := 4;
+  cols := 5;
+
+  writeln('Binary Grid:');
+  // Example Grid (Modify this grid based on your input)
+  // 1 0 1 0 0
+  // 1 1 0 1 1
+  // 0 1 0 0 1
+  // 0 0 0 0 0
+  for i := 1 to rows do
+  begin
+    for j := 1 to cols do
+    begin
+      // Read the grid values (1 or 0) from your input
+      // For this example, we manually set the values.
+      read(grid[i, j]);
+      write(grid[i, j], ' ');
+    end;
+    writeln;
+  end;
+
+  // Initialize visited array
+  for i := 1 to rows do
+    for j := 1 to cols do
+      visited[i, j] := False;
+
+  // Count and display the number of islands
+  writeln('Number of Islands: ', CountIslands);
+
+end.

@@ -3,11 +3,15 @@ class Solution:
         
         length = len(nums)
 
-        for i in range(length - 2):
-            for j in range(i + 1 , length - 1):
-                if (nums[i] < nums[j]):
-                    for k in range(j + 1, length):
-                        if (nums[j] < nums[k]):
-                            return True
+        first , second = float('inf') , float('inf')
+
+        for i in range(length):
+            if (nums[i] < first):
+                first = nums[i]
+            elif (nums[i] < second) :
+                second = nums[i]
+            else:
+                return True
+
         
         return False
