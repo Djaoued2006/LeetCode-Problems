@@ -1,35 +1,28 @@
 class Solution:
     def longestOnes(self, nums: list[int], k: int) -> int:
-        i , j = 0 , 0
-        nlen = len(nums)
-        numberFlippedZeros = 0
-        maxOnes = 0
+        max_length = 0
 
-        while i < nlen:
-            # print(nums[i : j + 1])
-            if nums[j] == 0:
-                if numberFlippedZeros == k:
-                    maxOnes = max(maxOnes , j - i)
-            
+        number_of_flipped_zeros = 0
 
-                    numberFlippedZeros = 0
-                    i += 1
-                    j = i
+        left, right, length = 0 , 0 , len(nums)
+
+        while left < length:
+            if right == length:
+                return max(max_length , right - left)
+                
+            if not nums[right]:
+                if number_of_flipped_zeros == k:
+                    max_length = max(max_length , right - left)
+
+                    if not nums[left]:
+                        number_of_flipped_zeros -= 1
+                    
+                    left += 1
 
                 else:
-                    j += 1
-                    numberFlippedZeros += 1
+                    number_of_flipped_zeros += 1
+                    right += 1
             else:
-                j += 1
-            
-            if j == nlen:
-                maxOnes = max(maxOnes , j - i)
-                i += 1
-                j = i 
-            
+                right += 1
         
-        return maxOnes
-
-nums = [0,0,0,1]; k = 4
-print(Solution().longestOnes(nums , k))
-                
+        return max_length
